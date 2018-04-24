@@ -1,4 +1,6 @@
-class Xotaker extends LivingCreature {
+var LivingCreature = require('class.livingcreature.js');
+
+module.exports = class Xotaker extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.multiply = Math.round(Math.random() * 8);

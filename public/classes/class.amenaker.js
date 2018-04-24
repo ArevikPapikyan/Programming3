@@ -1,4 +1,6 @@
-class Amenaker extends LivingCreature{
+var LivingCreature = require('class.livingcreature.js');
+
+module.exports = class Amenaker extends LivingCreature{
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = Math.round(Math.random() * 16);
