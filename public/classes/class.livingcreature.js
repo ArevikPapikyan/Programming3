@@ -3,7 +3,7 @@ module.exports = class LivingCreature{
         this.x = x;
         this.y = y;
         this.index = index;
-        matrix[this.y][this.x] = this.index;        
+        matrix[this.y][this.x] = this.index;   
         this.directions = [
            [this.x - 1, this.y - 1],
            [this.x, this.y - 1],

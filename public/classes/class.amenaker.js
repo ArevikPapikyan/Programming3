@@ -1,4 +1,4 @@
-var LivingCreature = require('class.livingcreature.js');
+var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Amenaker extends LivingCreature{
     constructor(x, y, index) {
@@ -6,7 +6,7 @@ module.exports = class Amenaker extends LivingCreature{
         this.energy = Math.round(Math.random() * 16);
         this.speed = 24;
         this.multiply = Math.round(Math.random() * 16);
-        matrix[this.y][this.x] = this.index;
+        // matrix[this.y][this.x] = this.index;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],

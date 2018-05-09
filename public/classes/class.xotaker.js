@@ -1,4 +1,4 @@
-var LivingCreature = require('class.livingcreature.js');
+var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Xotaker extends LivingCreature {
     constructor(x, y, index) {

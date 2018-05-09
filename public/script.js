@@ -1,12 +1,26 @@
 socket = io.connect('http://localhost:4000');
-var sentData = [];
-socket.on('sending width, height, side and matrices', function (data) {
-    sentData.push(data);
+
+var w = 30;
+var h = 30;
+var side = 22;
+var matrix = [];
+var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [];
+
+socket.on('matrix', function (data) {
+    matrix = [];
+    for (i in data) {
+        matrix.push(data[i]);
+    }
+    // console.log(matrix);
 });
-console.log(sentData);
-console.log(sentData[0]);
-var w = sentData[0];
-console.log(w);
+
+socket.on('sending arrays', function (data) {
+    grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [];
+    grassArr = data[0];
+    xotakerArr = data[1];
+    gishatichArr = data[2];
+    amenakerArr = data[3];
+});
 
 function setup() {
     createCanvas(side * w, side * h);
@@ -15,45 +29,24 @@ function setup() {
 }
 
 function draw() {
-    for (var y in matrix) {
-        for (var x in matrix[y]) {
-            if (matrix[y][x] == 0) {
+    for(var y in matrix) {
+        for(var x in matrix[y]) {
+            if(matrix[y][x] == 0) {
                 fill("#acacac");
             }
-            else if (matrix[y][x] == 1) {
+            else if(matrix[y][x] == 1) {
                 fill("green");
             }
-            else if (matrix[y][x] == 2) {
+            else if(matrix[y][x] == 2) {
                 fill("yellow");
             }
-            else if (matrix[y][x] == 3) {
+            else if(matrix[y][x] == 3) {
                 fill("red");
             }
-            else if (matrix[y][x] == 4) {
+            else if(matrix[y][x] == 4) {
                 fill("pink");
             }
             rect(x * side, y * side, side, side);
         }
-    }
-
-    for (var i in grassArr) {
-        grassArr[i].mul();
-    }
-
-    for (var i in xotakerArr) {
-        xotakerArr[i].bazmanal();
-        xotakerArr[i].utel();
-        xotakerArr[i].mahanal();
-    }
-
-    for (var i in gishatichArr) {
-        gishatichArr[i].bazmanal();
-        gishatichArr[i].utel();
-        gishatichArr[i].mahanal();
-    }
-
-    for (var i in amenakerArr) {
-        amenakerArr[i].bazmanal();
-        amenakerArr[i].utel();
     }
 }
