@@ -12,8 +12,9 @@ app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('public');
 });
-server.listen(4000);
+server.listen(3000);
 
+<<<<<<< HEAD
 var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], yndhanur = [];
 var w = 30;
 var h = 30;
@@ -45,6 +46,23 @@ matrix = genMatrix(w, h);
 io.on('connection', function (socket) {
     setInterval(function () {
         io.sockets.emit("matrix", matrix);
+=======
+io.on('connection', function (socket) {
+    var dataToSend = [w, h, side];
+    io.emit('sending width, height, side', dataToSend);
+    socket.on('matrix', function (data) {
+        console.log(data);
+        matrix = data;
+    });
+
+    var matrix = data;
+    var w = 30;
+    var h = 30;
+    var side = 22;
+    var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], yndhanur = [];
+
+    setInterval(function () {
+>>>>>>> d91b085c1d897c974677e2cf011af1cce28ba99f
         for (var y in matrix) {
             for (var x in matrix[y]) {
                 if (matrix[y][x] == 1) {
@@ -59,8 +77,23 @@ io.on('connection', function (socket) {
                 else if (matrix[y][x] == 4) {
                     amenakerArr.push(new Amenaker(x * 1, y * 1, 4))
                 }
+<<<<<<< HEAD
+=======
+                console.log(matrix);
+>>>>>>> d91b085c1d897c974677e2cf011af1cce28ba99f
             }
+            console.log(matrix);
         }
+        for (var i in grassArr) {
+            yndhanur.push(grassArr[i]);
+        }
+        for (var i in xotakerArr) {
+            yndhanur.push(xotakerArr[i]);
+        }
+        for (var i in gishatichArr) {
+            yndhanur.push(gishatichArr[i]);
+        }
+<<<<<<< HEAD
         for (var i in grassArr) {
             yndhanur.push(grassArr[i]);
         }
@@ -97,3 +130,10 @@ io.on('connection', function (socket) {
     }, 1000);
 
 });
+=======
+
+        var m = [grassArr, xotakerArr, gishatichArr, amenakerArr]
+        io.emit('m', m)
+    }, 1000);
+});
+>>>>>>> d91b085c1d897c974677e2cf011af1cce28ba99f
