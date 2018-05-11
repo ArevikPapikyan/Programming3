@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-socket = io.connect('http://localhost:4000');
+socket = io.connect('http://localhost:3000');
 
 var w = 30;
 var h = 30;
@@ -22,53 +21,51 @@ socket.on('sending arrays', function (data) {
     gishatichArr = data[2];
     amenakerArr = data[3];
 });
-=======
 socket = io.connect('http://localhost:3000');
 var sentData = [];
 
-var w = sentData[0];
-var h = sentData[1];
-var side = sentData[2];
-var grassArr = sentData[3];
-var xotakerArr = sentData[4];
-var gishatichArr = sentData[5];
-var amenakerArr = sentData[6];
+// var w = sentData[0];
+// var h = sentData[1];
+// var side = sentData[2];
+var grassArr = sentData[0];
+var xotakerArr = sentData[1];
+var gishatichArr = sentData[2];
+var amenakerArr = sentData[3];
 
-socket.on('sending width, height, side', function (data) {
-    sentData.push(...data);
-    w = sentData[0];
-    h = sentData[1];
-    side = sentData[2];
-});
+// socket.on('sending width, height, side', function (data) {
+//     sentData.push(...data);
+//     w = sentData[0];
+//     h = sentData[1];
+//     side = sentData[2];
+// });
 
-function genMatrix(w, h) {
-    var matrix = [];
-    for (var y = 0; y < h; y++) {
-        matrix[y] = [];
-        for (var x = 0; x < w; x++) {
-            var r = random(105);
-            if (r < 20) r = 0;
-            else if (r < 65) r = 1;
-            else if (r < 90) r = 2;
-            else if (r < 100) r = 3;
-            else if (r < 105) r = 4;
-            matrix[y][x] = r;
-        }
-    }
-    return matrix;
-}
+// function genMatrix(w, h) {
+//     var matrix = [];
+//     for (var y = 0; y < h; y++) {
+//         matrix[y] = [];
+//         for (var x = 0; x < w; x++) {
+//             var r = random(105);
+//             if (r < 20) r = 0;
+//             else if (r < 65) r = 1;
+//             else if (r < 90) r = 2;
+//             else if (r < 100) r = 3;
+//             else if (r < 105) r = 4;
+//             matrix[y][x] = r;
+//         }
+//     }
+//     return matrix;
+// }
 
 var matrix;
->>>>>>> d91b085c1d897c974677e2cf011af1cce28ba99f
 
 function setup() {
-    matrix = genMatrix(w, h);
-    console.log(matrix);
+    // matrix = genMatrix(w, h);
+    // console.log(matrix);
     createCanvas(side * w, side * h);
     background("#acacac");
     frameRate(5);
 }
-console.log(matrix);
+// console.log(matrix);
 socket.emit('matrix'. matrix);
 
 socket.on('m', function (data) {
