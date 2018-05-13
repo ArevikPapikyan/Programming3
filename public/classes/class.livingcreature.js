@@ -15,6 +15,10 @@ module.exports = class LivingCreature{
  
     }
 
+    random(arr){
+        return arr[ Math.round(Math.random() * arr.length) ];
+    }
+
     stanalNorKordinatner() {
         this.directions = [
             [this.x - 1, this.y - 1],

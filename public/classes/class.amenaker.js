@@ -21,7 +21,7 @@ module.exports = class Amenaker extends LivingCreature{
     }
 
     sharjvel() {
-        var vand = random(this.yntrelVandak(0));
+        var vand = this.random(this.yntrelVandak(0));
         if (vand && this.multiply >= this.speed / 2) {
             this.energy--;
             matrix[this.y][this.x] = 0;
@@ -32,8 +32,8 @@ module.exports = class Amenaker extends LivingCreature{
 
     utel() {
         this.energy--;
-        var rand = Math.round(random(1, 3));
-        var vand = random(this.yntrelVandak(rand));
+        var rand = Math.round(Math.random()*3);
+        var vand = this.random(this.yntrelVandak(rand));
         if (vand && this.multiply >= this.speed / 2) {
             this.energy += this.speed/2;
             matrix[this.y][this.x] = 0;
@@ -50,7 +50,7 @@ module.exports = class Amenaker extends LivingCreature{
     }
 
     bazmanal() {
-        var vand = random(this.yntrelVandak(0));
+        var vand = this.random(this.yntrelVandak(0));
         if (vand && this.energy >= this.speed) {
             this.energy = 1;
             var newamenaker = new Amenaker(vand[0], vand[1], 3);

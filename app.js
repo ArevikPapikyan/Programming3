@@ -15,11 +15,11 @@ app.get('/', function (req, res) {
 server.listen(3000);
 
 global.grassArr = [];
-global.xotakerArr = []
-global.gishatichArr = []
-global.amenakerArr = []
+global.xotakerArr = [];
+global.gishatichArr = [];
+global.amenakerArr = [];
+global.yndhanur = [];
 
-var yndhanur = [];
 var w = 30;
 var h = 30;
 var side = 22;
@@ -43,7 +43,6 @@ function genMatrix(w, h) {
 }
 
 matrix = genMatrix(w, h);
-// console.log(matrix);
 
 io.on('connection', function (socket) {
     setInterval(function () {
@@ -117,7 +116,7 @@ io.on('connection', function (socket) {
         });
 
 
-        var m = [grassArr, xotakerArr, gishatichArr, amenakerArr]
+        var m = [grassArr, xotakerArr, gishatichArr, amenakerArr, yndhanur]
         io.emit('m', m)
     }, 1000);
 });

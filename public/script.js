@@ -4,22 +4,22 @@ var w = 30;
 var h = 30;
 var side = 22;
 var matrix = [];
-var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [];
+var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = []; yndhanur = [];
 
 socket.on('matrix', function (data) {
     matrix = [];
     for (i in data) {
         matrix.push(data[i]);
     }
-    // console.log(matrix);
 });
 
 socket.on('sending arrays', function (data) {
-    grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [];
+    grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = []; yndhanur = [];
     grassArr = data[0];
     xotakerArr = data[1];
     gishatichArr = data[2];
     amenakerArr = data[3];
+    yndhanur = data[4];
 });
 socket = io.connect('http://localhost:3000');
 var sentData = [];
@@ -32,38 +32,12 @@ var xotakerArr = sentData[1];
 var gishatichArr = sentData[2];
 var amenakerArr = sentData[3];
 
-// socket.on('sending width, height, side', function (data) {
-//     sentData.push(...data);
-//     w = sentData[0];
-//     h = sentData[1];
-//     side = sentData[2];
-// });
-
-// function genMatrix(w, h) {
-//     var matrix = [];
-//     for (var y = 0; y < h; y++) {
-//         matrix[y] = [];
-//         for (var x = 0; x < w; x++) {
-//             var r = random(105);
-//             if (r < 20) r = 0;
-//             else if (r < 65) r = 1;
-//             else if (r < 90) r = 2;
-//             else if (r < 100) r = 3;
-//             else if (r < 105) r = 4;
-//             matrix[y][x] = r;
-//         }
-//     }
-//     return matrix;
-// }
-
 var matrix;
 
 function setup() {
-    // matrix = genMatrix(w, h);
-    // console.log(matrix);
     createCanvas(side * w, side * h);
     background("#acacac");
-    frameRate(5);
+    frameRate(30);
 }
 // console.log(matrix);
 socket.emit('matrix'. matrix);
