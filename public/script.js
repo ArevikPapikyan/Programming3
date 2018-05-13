@@ -1,8 +1,5 @@
 socket = io.connect('http://localhost:3000');
 
-var w = 30;
-var h = 30;
-var side = 22;
 var matrix = [];
 var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = []; yndhanur = [];
 
@@ -12,6 +9,18 @@ socket.on('matrix', function (data) {
         matrix.push(data[i]);
     }
 });
+
+var w = 30;
+var h = 30;
+var side = 22;
+
+var w, h, side;
+
+socket.on('sending w, h, side', function (data) {
+    w = data[0];
+    h = data[1];
+    side = data[2];
+})
 
 socket.on('sending arrays', function (data) {
     grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = []; yndhanur = [];
@@ -24,13 +33,10 @@ socket.on('sending arrays', function (data) {
 socket = io.connect('http://localhost:3000');
 var sentData = [];
 
-// var w = sentData[0];
-// var h = sentData[1];
-// var side = sentData[2];
-var grassArr = sentData[0];
-var xotakerArr = sentData[1];
-var gishatichArr = sentData[2];
-var amenakerArr = sentData[3];
+var grassArr = [];
+var xotakerArr = [];
+var gishatichArr = [];
+var amenakerArr = [];
 
 var matrix;
 
@@ -43,11 +49,11 @@ function setup() {
 socket.emit('matrix'. matrix);
 
 socket.on('m', function (data) {
-    grassArr = sentData[3];
-    xotakerArr = sentData[4];
-    gishatichArr = sentData[5];
-    amenakerArr = sentData[6];
-    matrix = sentData[7];
+    grassArr = data[0];
+    xotakerArr = data[1];
+    gishatichArr = data[2];
+    amenakerArr = data[3];
+    matrix = data[4];
 });
 
 function draw() {
