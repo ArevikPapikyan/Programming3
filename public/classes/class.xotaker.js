@@ -5,6 +5,7 @@ module.exports = class Xotaker extends LivingCreature {
         super(x, y, index);
         this.multiply = Math.round(Math.random() * 8);
         this.speed = 8;
+        // var gender = (this.index % 1 == 0 ? "arakan" : "igakan");
     }
 
     sharjvel() {

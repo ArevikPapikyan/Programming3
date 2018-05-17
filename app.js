@@ -2,11 +2,13 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var fs = require('fs');
 
 var Grass = require('./public/classes/class.grass.js');
 var Xotaker = require('./public/classes/class.xotaker.js');
 var Gishatich = require('./public/classes/class.gishatich.js');
 var Amenaker = require('./public/classes/class.amenaker.js');
+var Bomb = require('./public/classes/class.bomb.js');
 
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -50,13 +52,9 @@ io.on('connection', function (socket) {
     var dataToSend = [w, h, side];
     io.emit('sending width, height, side', dataToSend);
     socket.on('matrix', function (data) {
-        console.log(data);
         matrix = data;
     });
 
-    var w = 30;
-    var h = 30;
-    var side = 22;
     var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], yndhanur = [];
 
     setInterval(function () {
@@ -69,7 +67,7 @@ io.on('connection', function (socket) {
                     xotakerArr.push(new Xotaker(x * 1, y * 1, 2));
                 }
                 else if (matrix[y][x] == 3) {
-                    gishatichArr.push(new Gishatich(x * 1, y * 1, 3))
+                    gishatichArr.push(new Gishatich(x * 1, y * 1, 3));
                 }
                 else if (matrix[y][x] == 4) {
                     amenakerArr.push(new Amenaker(x * 1, y * 1, 4))
@@ -88,8 +86,6 @@ io.on('connection', function (socket) {
         for (var i in gishatichArr) {
             yndhanur.push(gishatichArr[i]);
         }
-
-        // socket.emit('sending arrays', [grassArr, xotakerArr, gishatichArr, amenakerArr]);
 
         for (var i in grassArr) {
             grassArr[i].mul();
@@ -110,9 +106,51 @@ io.on('connection', function (socket) {
         for (var i in amenakerArr) {
             amenakerArr[i].bazmanal();
             amenakerArr[i].utel();
+            amenakerArr[i].mahanal();
         }
 
     }, 1500);
-    var m = [grassArr, xotakerArr, gishatichArr, amenakerArr, yndhanur]
-    io.emit('m', m)
+    var arr = [grassArr, xotakerArr, gishatichArr, amenakerArr, yndhanur]
+    io.emit('sending arrays', arr);
+
 });
+
+
+// _______________BOMB_________________
+
+bombArr = [];
+
+setInterval(function () {
+    var x = Math.floor(Math.random() * matrix[0].length);
+    var y = Math.floor(Math.random() * matrix.length);
+    bombArr.push(new Bomb(x, y));
+    for (var i in bombArr) {
+        bombArr[i].paytel();
+    }
+}, 1500);
+
+
+// ___________STATISTICS______________
+
+var statistics = {
+    'xoteri qanak': grassArr.length,
+    'xotakerneri qanak': xotakerArr.length,
+    'gishatichneri qanak': gishatichArr.length,
+    'amenakerneri qanak': amenakerArr.length,
+    'bomberi qanak': bombArr.length,
+}
+
+setInterval(function () {
+
+    statistics["xoteri qanak"] = grassArr.length;
+    statistics["xotakerneri qanak"] = xotakerArr.length;
+    statistics["gishatichneri qanak"] = gishatichArr.length;
+    statistics["amenakerneri qanak"] = amenakerArr.length;
+    statistics["bomberi qanak"] = bombArr.length;
+
+    fs.writeFile('statistics.json', JSON.stringify(statistics), function (err) {
+        if (err) throw err;
+    });
+}, 10000);
+
+// problem with statistics

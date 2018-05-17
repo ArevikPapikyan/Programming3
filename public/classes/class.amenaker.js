@@ -57,4 +57,15 @@ module.exports = class Amenaker extends LivingCreature{
             amenakerArr.push(newamenaker);
         }
     }
+
+    mahanal() {
+        if (this.energy <= -(this.speed / 2)) {
+            matrix[this.y][this.x] = 0;
+            for (var i in amenakerArr) {
+                if (amenakerArr[i].x == this.x && amenakerArr[i].y == this.y) {
+                    amenakerArr.splice(i, 1);
+                }
+            }
+        }
+    }
 }
