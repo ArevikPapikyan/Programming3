@@ -45,30 +45,57 @@ function setup() {
     frameRate(5);
 }
 
-socket.emit('matrix'. matrix);
-
 function draw() {
-    for(var y in matrix) {
-        for(var x in matrix[y]) {
-            if(matrix[y][x] == 0) {
+    for (var y in matrix) {
+        for (var x in matrix[y]) {
+            if (matrix[y][x] == 0) {
                 fill("#acacac");
             }
-            else if(matrix[y][x] == 1) {
+            else if (matrix[y][x] == 1) {
                 fill("green");
             }
-            else if(matrix[y][x] == 2) {
+            else if (matrix[y][x] == 2 || matrix[x][y] == 2.5) {
                 fill("yellow");
             }
-            else if(matrix[y][x] == 3) {
+            else if (matrix[y][x] == 3 || matrix[x][y] == 3.5) {
                 fill("red");
             }
-            else if(matrix[y][x] == 4) {
+            else if (matrix[y][x] == 4 || matrix[x][y] == 4.5) {
                 fill("pink");
-            }
-            else if(matrix[y][x] == 5) {
-                fill("black");
             }
             rect(x * side, y * side, side, side);
         }
     }
 }
+
+
+// ___________UNIQUE_EVENT______________
+
+function bodyClick(evt) {
+    if (evt.pageX <= side * w && evt.pageY <= side * h) {
+        i = Math.floor(evt.pageX / side);
+        j = Math.floor(evt.pageY / side);
+        console.log(i, j);
+
+        if (matrix[i][j] == 1){
+            grassArr.splice(grassArr.length - 1, 1);
+            socket.emit('sending updated grassArr', grassArr);
+        }
+        else if (matrix[i][j] == 2){
+            xotakerArr.splice(xotakerArr.length - 1, 1);
+            socket.emit('sending updated xotakerArr', xotakerArr);
+        }
+        else if (matrix[i][j] == 3){
+            gishatichArr.splice(gishatichArr.length - 1, 1);
+            socket.emit('sending updated gishatichArr', gishatichArr);
+        }
+        else if (matrix[i][j] == 4) {
+            amenakerArr.splice(amenakerArr.length - 1, 1);
+            socket.emit('sending updated amenakerArr', amenakerArr);
+        }
+
+        matrix[j][i] = 0;
+        socket.emit('updated matrix', matrix);
+    }
+}
+window.onclick = bodyClick;

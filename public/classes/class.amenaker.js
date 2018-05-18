@@ -6,7 +6,7 @@ module.exports = class Amenaker extends LivingCreature{
         this.energy = Math.round(Math.random() * 16);
         this.speed = 24;
         this.multiply = Math.round(Math.random() * 16);
-        // matrix[this.y][this.x] = this.index;
+        matrix[this.y][this.x] = this.index;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -39,9 +39,9 @@ module.exports = class Amenaker extends LivingCreature{
             matrix[this.y][this.x] = 0;
             this.x = vand[0]; this.y = vand[1];
             matrix[this.y][this.x] = 4;
-            for (var i in yndhanur) {
-                if (yndhanur[i].x == this.x && yndhanur[i].y == this.y) {
-                    yndhanur.splice(i, 1);
+            for (var i in gishatichArr) {
+                if (gishatichArr[i].x == this.x && gishatichArr[i].y == this.y) {
+                    gishatichArr.splice(i, 1);
                     break;
                 }
             }
@@ -49,12 +49,22 @@ module.exports = class Amenaker extends LivingCreature{
         else this.sharjvel();
     }
 
+
     bazmanal() {
-        var vand = this.random(this.yntrelVandak(0));
-        if (vand && this.energy >= this.speed) {
-            this.energy = 1;
-            var newamenaker = new Amenaker(vand[0], vand[1], 3);
-            amenakerArr.push(newamenaker);
+        if (this.index == 4) {
+            var vand = this.random(this.yntrelVandak(4.5));
+        }
+        else {
+            var vand = this.random(this.yntrelVandak(4));
+        }
+
+        if (vand) {
+            var newvand = this.random(this.yntrelVandak(0));
+            if (newvand && this.energy >= this.speed) {
+                var r = (Math.round(Math.random())/2) + 4;
+                var newamenaker = new Amenaker(newvand[0], newvand[1], r);
+                amenakerArr.push(newamenaker);
+            }
         }
     }
 

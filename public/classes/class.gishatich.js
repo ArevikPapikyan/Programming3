@@ -6,7 +6,7 @@ module.exports = class Gishatich extends LivingCreature{
         this.energy = Math.round(Math.random() * 16);
         this.speed = 24;
         this.multiply = Math.round(Math.random() * 16);
-        // matrix[this.y][this.x] = this.index;
+        matrix[this.y][this.x] = this.index;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -53,11 +53,20 @@ module.exports = class Gishatich extends LivingCreature{
     }
 
     bazmanal() {
-        var vand = this.random(this.yntrelVandak(0));
-        if (vand && this.energy >= this.speed) {
-            this.energy = 1;
-            var newgishatich = new Gishatich(vand[0], vand[1], 3);
-            gishatichArr.push(newgishatich);
+        if (this.index == 3) {
+            var vand = this.random(this.yntrelVandak(3.5));
+        }
+        else {
+            var vand = this.random(this.yntrelVandak(3));
+        }
+
+        if (vand) {
+            var newvand = this.random(this.yntrelVandak(0));
+            if (newvand && this.energy >= this.speed) {
+                var r = (Math.round(Math.random())/2) + 3;
+                var newgishatich = new Gishatich(newvand[0], newvand[1], r);
+                gishatichArr.push(newgishatich);
+            }
         }
     }
 

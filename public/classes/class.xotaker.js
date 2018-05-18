@@ -2,10 +2,11 @@ var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Xotaker extends LivingCreature {
     constructor(x, y, index) {
-        super(x, y, index);
+        super(x, y);
+        this.index = index;
         this.multiply = Math.round(Math.random() * 8);
+        this.energy = Math.round(Math.random() * 16);
         this.speed = 8;
-        // var gender = (this.index % 1 == 0 ? "arakan" : "igakan");
     }
 
     sharjvel() {
@@ -40,11 +41,20 @@ module.exports = class Xotaker extends LivingCreature {
     }
 
     bazmanal() {
-        var vand = this.random(this.yntrelVandak(0));
-        if (vand && this.energy >= this.speed) {
-            this.energy = 1;
-            var newxotaker = new Xotaker(vand[0], vand[1], 2);
-            xotakerArr.push(newxotaker);
+        if (this.index == 2) {
+            var vand = this.random(this.yntrelVandak(2.5));
+        }
+        else {
+            var vand = this.random(this.yntrelVandak(2));
+        }
+
+        if (vand) {
+            var newvand = this.random(this.yntrelVandak(0));
+            if (newvand && this.energy >= this.speed) {
+                var r = (Math.round(Math.random())/2) + 2;
+                var newxotaker = new Xotaker(newvand[0], newvand[1], r);
+                xotakerArr.push(newxotaker);
+            }
         }
     }
 
