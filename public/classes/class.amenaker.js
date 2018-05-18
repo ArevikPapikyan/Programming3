@@ -53,17 +53,14 @@ module.exports = class Amenaker extends LivingCreature{
     bazmanal() {
         if (this.index == 4) {
             var vand = this.random(this.yntrelVandak(4.5));
-        }
-        else {
-            var vand = this.random(this.yntrelVandak(4));
-        }
-
-        if (vand) {
-            var newvand = this.random(this.yntrelVandak(0));
-            if (newvand && this.energy >= this.speed) {
-                var r = (Math.round(Math.random())/2) + 4;
-                var newamenaker = new Amenaker(newvand[0], newvand[1], r);
-                amenakerArr.push(newamenaker);
+            if (vand) {
+                var newvand = this.random(this.yntrelVandak(0));
+                if (newvand) {
+                    var r = (Math.round(Math.random()) / 2) + 4;
+                    var newamenaker = new Amenaker(newvand[0], newvand[1], r);
+                    amenakerArr.push(newamenaker);
+                    matrix[newvand[1]][newvand[0]] = r;
+                }
             }
         }
     }

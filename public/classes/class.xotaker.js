@@ -43,17 +43,14 @@ module.exports = class Xotaker extends LivingCreature {
     bazmanal() {
         if (this.index == 2) {
             var vand = this.random(this.yntrelVandak(2.5));
-        }
-        else {
-            var vand = this.random(this.yntrelVandak(2));
-        }
-
-        if (vand) {
-            var newvand = this.random(this.yntrelVandak(0));
-            if (newvand && this.energy >= this.speed) {
-                var r = (Math.round(Math.random())/2) + 2;
-                var newxotaker = new Xotaker(newvand[0], newvand[1], r);
-                xotakerArr.push(newxotaker);
+            if (vand) {
+                var newvand = this.random(this.yntrelVandak(0));
+                if (newvand) {
+                    var r = (Math.round(Math.random()) / 2) + 2;
+                    var newxotaker = new Xotaker(newvand[0], newvand[1], r);
+                    xotakerArr.push(newxotaker);
+                    matrix[newvand[1]][newvand[0]] = r;
+                }
             }
         }
     }

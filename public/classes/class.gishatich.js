@@ -55,17 +55,14 @@ module.exports = class Gishatich extends LivingCreature{
     bazmanal() {
         if (this.index == 3) {
             var vand = this.random(this.yntrelVandak(3.5));
-        }
-        else {
-            var vand = this.random(this.yntrelVandak(3));
-        }
-
-        if (vand) {
-            var newvand = this.random(this.yntrelVandak(0));
-            if (newvand && this.energy >= this.speed) {
-                var r = (Math.round(Math.random())/2) + 3;
-                var newgishatich = new Gishatich(newvand[0], newvand[1], r);
-                gishatichArr.push(newgishatich);
+            if (vand) {
+                var newvand = this.random(this.yntrelVandak(0));
+                if (newvand) {
+                    var r = (Math.round(Math.random()) / 2) + 3;
+                    var newgishatich = new Gishatich(newvand[0], newvand[1], r);
+                    gishatichArr.push(newgishatich);
+                    matrix[newvand[1]][newvand[0]] = r;
+                }
             }
         }
     }

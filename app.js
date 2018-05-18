@@ -28,6 +28,9 @@ io.sockets.emit('sending w, h, side', [w, h, side]);
 
 global.matrix = [];
 
+global.weather = 'winter';
+io.emit('sending weather', weather);
+
 function genMatrix(w, h) {
     var matrix = [];
     for (var y = 0; y < h; y++) {
@@ -59,17 +62,17 @@ io.on('connection', function (socket) {
                     grassArr.push(new Grass(x * 1, y * 1, 1));
                 }
                 else if (matrix[y][x] == 2) {
-                    var r = (Math.round(Math.random())/2) + 2;
+                    var r = (Math.round(Math.random()) / 2) + 2;
                     matrix[x][y] = r;
                     xotakerArr.push(new Xotaker(x * 1, y * 1, r));
                 }
                 else if (matrix[y][x] == 3) {
-                    var r = (Math.round(Math.random())/2) + 3;
+                    var r = (Math.round(Math.random()) / 2) + 3;
                     matrix[x][y] = r;
                     gishatichArr.push(new Gishatich(x * 1, y * 1, r));
                 }
                 else if (matrix[y][x] == 4) {
-                    var r = (Math.round(Math.random())/2) + 4;
+                    var r = (Math.round(Math.random()) / 2) + 4;
                     matrix[x][y] = r;
                     amenakerArr.push(new Amenaker(x * 1, y * 1, r))
                 }
@@ -100,7 +103,7 @@ io.on('connection', function (socket) {
             amenakerArr[i].mahanal();
         }
 
-    }, 1500);
+    }, 2000);
     var arr = [grassArr, xotakerArr, gishatichArr, amenakerArr]
     io.emit('sending arrays', arr);
 
@@ -111,19 +114,19 @@ io.on('updated matrix', function (data) {
     matrix = data;
 })
 
-io.on('sending updated grassArr', function(data) {
+io.on('sending updated grassArr', function (data) {
     grassArr = data;
 })
 
-io.on('sending updated xotakerArr', function(data) {
+io.on('sending updated xotakerArr', function (data) {
     xotakerArr = data;
 })
 
-io.on('sending updated gishatichArr', function(data) {
+io.on('sending updated gishatichArr', function (data) {
     gishatichArr = data;
 })
 
-io.on('sending updated amenakerArr', function(data) {
+io.on('sending updated amenakerArr', function (data) {
     amenakerArr = data;
 })
 
@@ -146,4 +149,23 @@ setInterval(function () {
     fs.writeFile('statistics.json', JSON.stringify(statistics), function (err) {
         if (err) throw err;
     });
+
+    // ______________WEATHER______________
+
+
+    if (weather == 'spring') {
+        weather = 'summer';
+    }
+    else if (weather == 'summer') {
+        weather = 'autumn';
+    }
+    else if (weather == 'autumn') {
+        weather = 'winter';
+    }
+    else if (weather == 'winter') {
+        weather = 'spring';
+    }
+
+    io.emit('sending weather', weather);
+
 }, 10000);

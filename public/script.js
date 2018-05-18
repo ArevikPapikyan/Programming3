@@ -37,9 +37,20 @@ socket.on('sending arrays', function (data) {
     matrix = data[4];
 });
 
+var weather = 'winter';
+
+socket.on('sending weather', function (data) {
+    weather = data;
+    console.log(weather);
+        document.getElementById('exanak').innerText = weather;
+});
+
+console.log(weather);
+
 var matrix;
 
 function setup() {
+    document.getElementById('exanak').innerText = weather;
     createCanvas(side * w, side * h);
     background("#acacac");
     frameRate(5);
@@ -54,13 +65,22 @@ function draw() {
             else if (matrix[y][x] == 1) {
                 fill("green");
             }
-            else if (matrix[y][x] == 2 || matrix[x][y] == 2.5) {
+            else if (matrix[y][x] == 2) {
                 fill("yellow");
             }
-            else if (matrix[y][x] == 3 || matrix[x][y] == 3.5) {
+            else if (matrix[x][y] == 2.5) {
+                fill("#FCE77D");
+            }
+            else if (matrix[y][x] == 3) {
                 fill("red");
             }
-            else if (matrix[y][x] == 4 || matrix[x][y] == 4.5) {
+            else if (matrix[x][y] == 3.5) {
+                fill("#FF4E4E");
+            }
+            else if (matrix[y][x] == 4) {
+                fill("purple");
+            }
+            else if (matrix[x][y] == 4.5) {
                 fill("pink");
             }
             rect(x * side, y * side, side, side);
@@ -81,15 +101,15 @@ function bodyClick(evt) {
             grassArr.splice(grassArr.length - 1, 1);
             socket.emit('sending updated grassArr', grassArr);
         }
-        else if (matrix[i][j] == 2){
+        else if (matrix[i][j] == 2 || matrix[i][j] == 2.5){
             xotakerArr.splice(xotakerArr.length - 1, 1);
             socket.emit('sending updated xotakerArr', xotakerArr);
         }
-        else if (matrix[i][j] == 3){
+        else if (matrix[i][j] == 3 || matrix[i][j] == 3.5){
             gishatichArr.splice(gishatichArr.length - 1, 1);
             socket.emit('sending updated gishatichArr', gishatichArr);
         }
-        else if (matrix[i][j] == 4) {
+        else if (matrix[i][j] == 4 || matrix[i][j] == 4.5) {
             amenakerArr.splice(amenakerArr.length - 1, 1);
             socket.emit('sending updated amenakerArr', amenakerArr);
         }
