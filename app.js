@@ -28,7 +28,7 @@ io.sockets.emit('sending w, h, side', [w, h, side]);
 
 global.matrix = [];
 
-global.weather = 'winter';
+global.weather = 'spring';
 io.emit('sending weather', weather);
 
 function genMatrix(w, h) {
@@ -50,10 +50,9 @@ function genMatrix(w, h) {
 
 matrix = genMatrix(w, h);
 io.on('connection', function (socket) {
-    var dataToSend = [w, h, side];
-    io.emit('sending width, height, side', dataToSend);
+    io.emit('sending width, height, side', [w, h, side]);
 
-    var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], yndhanur = [];
+    var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [];
 
     setInterval(function () {
         for (var y in matrix) {
@@ -103,9 +102,9 @@ io.on('connection', function (socket) {
             amenakerArr[i].mahanal();
         }
 
+        io.emit('sending arrays', [grassArr, xotakerArr, gishatichArr, amenakerArr]);
+
     }, 2000);
-    var arr = [grassArr, xotakerArr, gishatichArr, amenakerArr]
-    io.emit('sending arrays', arr);
 
 });
 

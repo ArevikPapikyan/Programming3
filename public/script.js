@@ -37,15 +37,12 @@ socket.on('sending arrays', function (data) {
     matrix = data[4];
 });
 
-var weather = 'winter';
+var weather = 'spring';
 
 socket.on('sending weather', function (data) {
     weather = data;
-    console.log(weather);
-        document.getElementById('exanak').innerText = weather;
+    document.getElementById('exanak').innerText = weather;
 });
-
-console.log(weather);
 
 var matrix;
 
@@ -95,26 +92,48 @@ function bodyClick(evt) {
     if (evt.pageX <= side * w && evt.pageY <= side * h) {
         i = Math.floor(evt.pageX / side);
         j = Math.floor(evt.pageY / side);
-        console.log(i, j);
-
-        if (matrix[i][j] == 1){
-            grassArr.splice(grassArr.length - 1, 1);
-            socket.emit('sending updated grassArr', grassArr);
-        }
-        else if (matrix[i][j] == 2 || matrix[i][j] == 2.5){
-            xotakerArr.splice(xotakerArr.length - 1, 1);
-            socket.emit('sending updated xotakerArr', xotakerArr);
-        }
-        else if (matrix[i][j] == 3 || matrix[i][j] == 3.5){
-            gishatichArr.splice(gishatichArr.length - 1, 1);
-            socket.emit('sending updated gishatichArr', gishatichArr);
-        }
-        else if (matrix[i][j] == 4 || matrix[i][j] == 4.5) {
-            amenakerArr.splice(amenakerArr.length - 1, 1);
-            socket.emit('sending updated amenakerArr', amenakerArr);
-        }
 
         matrix[j][i] = 0;
+
+        directions = [
+            [i - 1, j - 1],
+            [i, j - 1],
+            [i + 1, j - 1],
+            [i - 1, j],
+            [i - 1, j + 1],
+            [i, j + 1],
+            [i + 1, j + 1],
+            [i + 1, j]
+        ]
+
+        for (k in directions) {
+            var a = directions[k][0];
+            var b = directions[k][1];
+
+            if (a >= 0 && a < matrix[0].length && b >= 0 && b < matrix.length) {
+
+                if (matrix[a][b] == 1) {
+                    grassArr.splice(grassArr.length - 1, 1);
+                    socket.emi
+                    ('sending updated grassArr', grassArr);
+                }
+                else if (matrix[a][b] == 2 || matrix[a][b] == 2.5) {
+                    xotakerArr.splice(xotakerArr.length - 1, 1);
+                    socket.emit('sending updated xotakerArr', xotakerArr);
+                }
+                else if (matrix[a][b] == 3 || matrix[a][b] == 3.5) {
+                    gishatichArr.splice(gishatichArr.length - 1, 1);
+                    socket.emit('sending updated gishatichArr', gishatichArr);
+                }
+                else if (matrix[a][b] == 4 || matrix[a][b] == 4.5) {
+                    amenakerArr.splice(amenakerArr.length - 1, 1);
+                    socket.emit('sending updated amenakerArr', amenakerArr);
+                }
+                matrix[b][a] = 0;
+            }
+
+        }
+
         socket.emit('updated matrix', matrix);
     }
 }
