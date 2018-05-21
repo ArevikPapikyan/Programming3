@@ -83,26 +83,28 @@ io.on('connection', function (socket) {
         for (var i in grassArr) {
             grassArr[i].mul();
         }
+        io.emit('sending grassArr', grassArr);
 
         for (var i in xotakerArr) {
             xotakerArr[i].bazmanal();
             xotakerArr[i].utel();
             xotakerArr[i].mahanal();
         }
+        io.emit('sending xotakerArr', xotakerArr);
 
         for (var i in gishatichArr) {
             gishatichArr[i].bazmanal();
             gishatichArr[i].utel();
             gishatichArr[i].mahanal();
         }
+        io.emit('sending gishatichArr', gishatichArr);
 
         for (var i in amenakerArr) {
             amenakerArr[i].bazmanal();
             amenakerArr[i].utel();
             amenakerArr[i].mahanal();
         }
-
-        io.emit('sending arrays', [grassArr, xotakerArr, gishatichArr, amenakerArr]);
+        io.emit('sending amenakerArr', amenakerArr);
 
     }, 2000);
 

@@ -29,12 +29,17 @@ var xotakerArr = [];
 var gishatichArr = [];
 var amenakerArr = [];
 
-socket.on('sending arrays', function (data) {
-    grassArr = data[0];
-    xotakerArr = data[1];
-    gishatichArr = data[2];
-    amenakerArr = data[3];
-    matrix = data[4];
+socket.on('sending grassArr', function (data) {
+    grassArr = data;
+});
+socket.on('sending xotakerArr', function (data) {
+    xotakerArr = data;
+});
+socket.on('sending gishatichArr', function (data) {
+    gishatichArr = data;
+});
+socket.on('sending amenakerArr', function (data) {
+    amenakerArr = data;
 });
 
 var weather = 'spring';
@@ -114,8 +119,7 @@ function bodyClick(evt) {
 
                 if (matrix[a][b] == 1) {
                     grassArr.splice(grassArr.length - 1, 1);
-                    socket.emi
-                    ('sending updated grassArr', grassArr);
+                    socket.emit('sending updated grassArr', grassArr);
                 }
                 else if (matrix[a][b] == 2 || matrix[a][b] == 2.5) {
                     xotakerArr.splice(xotakerArr.length - 1, 1);
