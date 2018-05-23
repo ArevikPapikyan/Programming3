@@ -13,21 +13,13 @@ var w = 30;
 var h = 30;
 var side = 22;
 
-var w, h, side;
-
-socket.on('sending w, h, side', function (data) {
-    w = data[0];
-    h = data[1];
-    side = data[2];
-})
-
-socket = io.connect('http://localhost:3000');
 var sentData = [];
 
 var grassArr = [];
 var xotakerArr = [];
 var gishatichArr = [];
 var amenakerArr = [];
+var aygepanArr = [];
 
 socket.on('sending grassArr', function (data) {
     grassArr = data;
@@ -41,8 +33,11 @@ socket.on('sending gishatichArr', function (data) {
 socket.on('sending amenakerArr', function (data) {
     amenakerArr = data;
 });
+socket.on('sending aygepanArr', function (data) {
+    aygepanArr = data;
+});
 
-var weather = 'spring';
+var weather = 'գարուն';
 
 socket.on('sending weather', function (data) {
     weather = data;
@@ -64,26 +59,38 @@ function draw() {
             if (matrix[y][x] == 0) {
                 fill("#acacac");
             }
-            else if (matrix[y][x] == 1) {
+            else if (matrix[y][x] == 1 && weather == 'գարուն') {
                 fill("green");
+            }
+            else if (matrix[y][x] == 1 && weather == 'ամառ') {
+                fill("#5DD100");
+            }
+            else if (matrix[y][x] == 1 && weather == 'աշուն') {
+                fill("#BCE500");
+            }
+            else if (matrix[y][x] == 1 && weather == 'ձմեռ') {
+                fill("#82FF49");
             }
             else if (matrix[y][x] == 2) {
                 fill("yellow");
             }
-            else if (matrix[x][y] == 2.5) {
+            else if (matrix[y][x] == 2.5) {
                 fill("#FCE77D");
             }
             else if (matrix[y][x] == 3) {
                 fill("red");
             }
-            else if (matrix[x][y] == 3.5) {
+            else if (matrix[y][x] == 3.5) {
                 fill("#FF4E4E");
             }
             else if (matrix[y][x] == 4) {
                 fill("purple");
             }
-            else if (matrix[x][y] == 4.5) {
+            else if (matrix[y][x] == 4.5) {
                 fill("pink");
+            }
+            else if (matrix[y][x] == 5) {
+                fill("black");
             }
             rect(x * side, y * side, side, side);
         }
@@ -118,20 +125,44 @@ function bodyClick(evt) {
             if (a >= 0 && a < matrix[0].length && b >= 0 && b < matrix.length) {
 
                 if (matrix[a][b] == 1) {
-                    grassArr.splice(grassArr.length - 1, 1);
+                    for (var i in grassArr) {
+                        if (grassArr[i].x == a && grassArr[i].y == b) {
+                            grassArr.splice(i, 1);
+                        }
+                    }
                     socket.emit('sending updated grassArr', grassArr);
                 }
                 else if (matrix[a][b] == 2 || matrix[a][b] == 2.5) {
-                    xotakerArr.splice(xotakerArr.length - 1, 1);
+                    for (var i in xotakerArr) {
+                        if (xotakerArr[i].x == a && xotakerArr[i].y == b) {
+                            xotakerArr.splice(i, 1);
+                        }
+                    }
                     socket.emit('sending updated xotakerArr', xotakerArr);
                 }
                 else if (matrix[a][b] == 3 || matrix[a][b] == 3.5) {
-                    gishatichArr.splice(gishatichArr.length - 1, 1);
+                    for (var i in gishatichArr) {
+                        if (gishatichArr[i].x == a && gishatichArr[i].y == b) {
+                            gishatichArr.splice(i, 1);
+                        }
+                    }
                     socket.emit('sending updated gishatichArr', gishatichArr);
                 }
                 else if (matrix[a][b] == 4 || matrix[a][b] == 4.5) {
-                    amenakerArr.splice(amenakerArr.length - 1, 1);
+                    for (var i in amenakerArr) {
+                        if (amenakerArr[i].x == a && amenakerArr[i].y == b) {
+                            amenakerArr.splice(i, 1);
+                        }
+                    }
                     socket.emit('sending updated amenakerArr', amenakerArr);
+                }
+                else if (matrix[a][b] == 5) {
+                    for (var i in aygepanArr) {
+                        if (aygepanArr[i].x == a && aygepanArr[i].y == b) {
+                            aygepanArr.splice(i, 1);
+                        }
+                    }
+                    socket.emit('sending updated aygepanArr', aygepanArr);
                 }
                 matrix[b][a] = 0;
             }

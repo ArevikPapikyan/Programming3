@@ -2,38 +2,27 @@ var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Amenaker extends LivingCreature{
     constructor(x, y, index) {
-        super(x, y, index);
+        super(x, y);
+        this.index = index;
+        this.multiply = Math.round(Math.random() * 8);
         this.energy = Math.round(Math.random() * 16);
-        this.speed = 24;
-        this.multiply = Math.round(Math.random() * 16);
-        matrix[this.y][this.x] = this.index;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-
+        this.speed = 8;
     }
 
     sharjvel() {
         var vand = this.random(this.yntrelVandak(0));
-        if (vand && this.multiply >= this.speed / 2) {
+        if (vand && this.multiply >= this.speed / 4) {
             this.energy--;
             matrix[this.y][this.x] = 0;
             this.x = vand[0]; this.y = vand[1];
-            matrix[this.y][this.x] = 4;
+            matrix[this.y][this.x] = 2;
+            this.multiply = 0;
         }
     }
 
     utel() {
         this.energy--;
-        var rand = Math.round(Math.random()*3);
-        var vand = this.random(this.yntrelVandak(rand));
+        var vand = this.random(this.yntrelVandak(3));
         if (vand && this.multiply >= this.speed / 2) {
             this.energy += this.speed/2;
             matrix[this.y][this.x] = 0;

@@ -3,7 +3,7 @@ var LivingCreature = require('./class.livingcreature.js');
 module.exports = class Grass extends LivingCreature{
     constructor(x, y, index) {
         super(x, y, index);
-        this.multiply = Math.round(Math.random() * 8);
+        this.multiply = Math.round(Math.random() * 16);
         this.speed = 8;
     }
 
@@ -15,6 +15,17 @@ module.exports = class Grass extends LivingCreature{
             grassArr.push(newGrass);
             matrix[this.direction[1]][this.direction[0]] = this.index;
             this.multiply = 0;
+        }
+    }
+
+    mahanal() {
+        if (this.energy <= -(this.speed / 2)) {
+            matrix[this.y][this.x] = 0;
+            for (var i in grassArr) {
+                if (grassArr[i].x == this.x && grassArr[i].y == this.y) {
+                    grassArr.splice(i, 1);
+                }
+            }
         }
     }
 }
