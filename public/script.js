@@ -22,19 +22,19 @@ var amenakerArr = [];
 var aygepanArr = [];
 
 socket.on('sending grassArr', function (data) {
-    grassArr = data;
+    grassArr.push(...data);
 });
 socket.on('sending xotakerArr', function (data) {
-    xotakerArr = data;
+    xotakerArr.push(...data);
 });
 socket.on('sending gishatichArr', function (data) {
-    gishatichArr = data;
+    gishatichArr.push(...data);
 });
 socket.on('sending amenakerArr', function (data) {
-    amenakerArr = data;
+    amenakerArr.push(...data);
 });
 socket.on('sending aygepanArr', function (data) {
-    aygepanArr = data;
+    aygepanArr.push(...data);
 });
 
 var weather = 'գարուն';
