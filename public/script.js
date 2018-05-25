@@ -22,19 +22,19 @@ var amenakerArr = [];
 var aygepanArr = [];
 
 socket.on('sending grassArr', function (data) {
-    grassArr.push(...data);
+    grassArr = data;
 });
 socket.on('sending xotakerArr', function (data) {
-    xotakerArr.push(...data);
+    xotakerArr = data;
 });
 socket.on('sending gishatichArr', function (data) {
-    gishatichArr.push(...data);
+    gishatichArr = data;
 });
 socket.on('sending amenakerArr', function (data) {
-    amenakerArr.push(...data);
+    amenakerArr = data;
 });
 socket.on('sending aygepanArr', function (data) {
-    aygepanArr.push(...data);
+    aygepanArr = data;
 });
 
 var weather = 'գարուն';
@@ -105,9 +105,8 @@ function bodyClick(evt) {
         i = Math.floor(evt.pageX / side);
         j = Math.floor(evt.pageY / side);
 
-        matrix[j][i] = 0;
-
         directions = [
+            [i, j],
             [i - 1, j - 1],
             [i, j - 1],
             [i + 1, j - 1],
