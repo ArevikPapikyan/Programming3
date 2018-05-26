@@ -127,6 +127,7 @@ function bodyClick(evt) {
                     for (var i in grassArr) {
                         if (grassArr[i].x == a && grassArr[i].y == b) {
                             grassArr.splice(i, 1);
+                            socket.emit('decrement the grassCount');
                         }
                     }
                     socket.emit('sending updated grassArr', grassArr);
@@ -135,6 +136,8 @@ function bodyClick(evt) {
                     for (var i in xotakerArr) {
                         if (xotakerArr[i].x == a && xotakerArr[i].y == b) {
                             xotakerArr.splice(i, 1);
+                            if (matrix[a][b] == 2) socket.emit('decrement the arakanXotakerCount');
+                            else socket.emit('decrement the igakanXotakerCount');
                         }
                     }
                     socket.emit('sending updated xotakerArr', xotakerArr);
@@ -143,6 +146,8 @@ function bodyClick(evt) {
                     for (var i in gishatichArr) {
                         if (gishatichArr[i].x == a && gishatichArr[i].y == b) {
                             gishatichArr.splice(i, 1);
+                            if (matrix[a][b] == 3) socket.emit('decrement the arakanGishatichCount');
+                            else socket.emit('decrement the igakanGishatichCount');
                         }
                     }
                     socket.emit('sending updated gishatichArr', gishatichArr);
@@ -151,6 +156,8 @@ function bodyClick(evt) {
                     for (var i in amenakerArr) {
                         if (amenakerArr[i].x == a && amenakerArr[i].y == b) {
                             amenakerArr.splice(i, 1);
+                            if (matrix[a][b] == 4) socket.emit('decrement the arakanAmenakerCount');
+                            else socket.emit('decrement the igakanAmenakerCount');
                         }
                     }
                     socket.emit('sending updated amenakerArr', amenakerArr);
@@ -159,6 +166,7 @@ function bodyClick(evt) {
                     for (var i in aygepanArr) {
                         if (aygepanArr[i].x == a && aygepanArr[i].y == b) {
                             aygepanArr.splice(i, 1);
+                            socket.emit('decrement the aygepanCount');
                         }
                     }
                     socket.emit('sending updated aygepanArr', aygepanArr);

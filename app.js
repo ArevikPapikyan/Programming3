@@ -22,6 +22,15 @@ global.gishatichArr = [];
 global.amenakerArr = [];
 global.aygepanArr = [];
 
+global.grassCount = 0;
+global.arakanXotakerCount = 0;
+global.igakanXotakerCount = 0;
+global.arakanGishatichCount = 0;
+global.igakanGishatichCount = 0;
+global.arakanAmenakerCount = 0;
+global.igakanAmenakerCount = 0;
+global.aygepanCount = 0;
+
 global.w = 30;
 global.h = 30;
 global.side = 22;
@@ -52,37 +61,52 @@ function genMatrix(w, h) {
 matrix = genMatrix(w, h);
 
 io.on('connection', function (socket) {
-    var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], aygepanArr = [];
 
     setInterval(function () {
+        var grassArr = [], xotakerArr = [], gishatichArr = [], amenakerArr = [], aygepanArr = [];
+        grassCount = 0;
+        arakanXotakerCount = 0;
+        igakanXotakerCount = 0;
+        arakananGishatichCount = 0;
+        igakanGishatichCount = 0;
+        arakanAmenakerCount = 0;
+        igakanAmenakerCount = 0;
+        aygepanCount = 0;
         for (var y in matrix) {
             for (var x in matrix[y]) {
                 if (matrix[y][x] == 1) {
                     grassArr.push(new Grass(x * 1, y * 1, 1));
+                    grassCount++;
                 }
-                else if (matrix[y][x] == 2) {
+                else if (matrix[y][x] == 2 || matrix[y][x] == 2.5) {
                     var r = (Math.round(Math.random()) / 2) + 2;
                     matrix[y][x] = r;
                     xotakerArr.push(new Xotaker(x * 1, y * 1, r));
+                    if (r == 2) arakanXotakerCount++;
+                    else igakanXotakerCount++;
                 }
-                else if (matrix[y][x] == 3) {
+                else if (matrix[y][x] == 3 || matrix[y][x] == 3.5) {
                     var r = (Math.round(Math.random()) / 2) + 3;
                     matrix[y][x] = r;
                     gishatichArr.push(new Gishatich(x * 1, y * 1, r));
+                    if (r == 3) arakananGishatichCount++;
+                    else igakanGishatichCount++;
                 }
-                else if (matrix[y][x] == 4) {
+                else if (matrix[y][x] == 4 || matrix[y][x] == 4.5) {
                     var r = (Math.round(Math.random()) / 2) + 4;
                     matrix[y][x] = r;
                     amenakerArr.push(new Amenaker(x * 1, y * 1, r));
+                    if (r == 4) arakanAmenakerCount++;
+                    else igakanAmenakerCount++;
                 }
                 else if (matrix[y][x] == 5) {
                     aygepanArr.push(new Aygepan(x * 1, y * 1, 5));
+                    aygepanCount++;
                 }
             }
         }
 
         io.sockets.emit("matrix", matrix);
-
 
         for (var i in grassArr) {
             if (weather == 'ամառ') {
@@ -180,28 +204,59 @@ io.on('sending updated aygepanArr', function (data) {
     aygepanArr = data;
 })
 
+io.on('decrement the grassCount', function () {
+    grassCount--;
+});
+io.on('decrement the arakanXotakerCount', function () {
+    arakanXotakerCount--;
+});
+io.on('decrement the igakanXotakerCount', function () {
+    igakanXotakerCount--;
+});
+io.on('decrement the arakanGishatich', function () {
+    arakananGishatichCount--;
+});
+io.on('decrement the igakanGishatichCount', function () {
+    igakanGishatichCount--;
+});
+io.on('decrement the arakanAmenakerCount', function () {
+    arakanAmenakerCount--;
+});
+io.on('decrement the igakanAmenakerCount', function () {
+    igakanAmenakerCount--;
+});
+io.on('decrement the aygepanCount', function () {
+    aygepanCount--;
+});
+
 // ___________STATISTICS______________
 
 var statistics = {
-    'խոտերի քանակ': grassArr.length,
-    'խոտակերների քանակ': xotakerArr.length,
-    'գիշատիչների քանակ': gishatichArr.length,
-    'ամենակերների քանակ': amenakerArr.length,
-    'այգեպանների քանակ': aygepanArr.length
+    'խոտերի քանակ': grassCount,
+    'արական խոտակերների քանակ': arakanXotakerCount,
+    'իգական խոտակերնրի քանակ': igakanXotakerCount,
+    'արական գիշատիչների քանակ': arakanGishatichCount,
+    'իգական գիշատիչների քանակ': igakanGishatichCount,
+    'արական ամենակերների քանակ': arakanAmenakerCount,
+    'իգական ամենակերների քանակ': igakanAmenakerCount,
+    'այգեպանների քանակ': aygepanCount
 }
 
 setInterval(function () {
-    statistics["խոտերի քանակ"] = grassArr.length;
-    statistics["խոտակերների քանակ"] = xotakerArr.length;
-    statistics["գիշատիչների քանակ"] = gishatichArr.length;
-    statistics["ամենակերների քանակ"] = amenakerArr.length;
-    statistics["այգեպանների քանակ"] = aygepanArr.length;
+    statistics["խոտերի քանակ"] = grassCount;
+    statistics["արական խոտակերների քանակ"] = arakanXotakerCount;
+    statistics["իգական խոտակերնրի քանակ"] = igakanXotakerCount;
+    statistics["արական գիշատիչների քանակ"] = arakanGishatichCount;
+    statistics["իգական գիշատիչների քանակ"] = igakanGishatichCount;
+    statistics["արական ամենակերների քանակ"] = arakanAmenakerCount;
+    statistics["իգական ամենակերների քանակ"] = igakanAmenakerCount;
+    statistics["այգեպանների քանակ"] = aygepanCount
 
     fs.writeFile('statistics.json', JSON.stringify(statistics), function (err) {
         if (err) throw err;
     });
 
-    
+
     // ______________WEATHER_SWITCHING______________
 
     if (weather == 'գարուն') {

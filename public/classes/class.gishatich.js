@@ -1,9 +1,9 @@
 var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Gishatich extends LivingCreature{
-    constructor(x, y, index) {
+    constructor(x, y, r) {
         super(x, y);
-        this.index = index;
+        this.r = r;
         this.multiply = Math.round(Math.random() * 8);
         this.energy = Math.round(Math.random() * 16);
         this.speed = 8;
@@ -31,6 +31,8 @@ module.exports = class Gishatich extends LivingCreature{
             for (var i in xotakerArr) {
                 if (xotakerArr[i].x == this.x && xotakerArr[i].y == this.y) {
                     xotakerArr.splice(i, 1);
+                    if(xotakerArr[i].r == 2) arakanXotakerCount--;
+                    else igakanXotakerCount--;
                     break;
                 }
             }
@@ -47,6 +49,8 @@ module.exports = class Gishatich extends LivingCreature{
                     var r = (Math.round(Math.random()) / 2) + 3;
                     var newgishatich = new Gishatich(newvand[0], newvand[1], r);
                     gishatichArr.push(newgishatich);
+                    if (r == 3) arakanGishatichCount++;
+                    else igakanGishatichCount++;
                     matrix[newvand[1]][newvand[0]] = r;
                 }
             }
@@ -59,6 +63,8 @@ module.exports = class Gishatich extends LivingCreature{
             for (var i in gishatichArr) {
                 if (gishatichArr[i].x == this.x && gishatichArr[i].y == this.y) {
                     gishatichArr.splice(i, 1);
+                    if (gishatichArr[i].r == 3) arakanGishatichCount--;
+                    else igakanGishatichCount--;
                 }
             }
         }

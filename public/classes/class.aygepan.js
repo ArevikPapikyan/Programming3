@@ -22,6 +22,7 @@ module.exports = class Aygepan extends LivingCreature {
         if (grass) {
             var newgrass = new Grass(grass[0], grass[1], 1);
             grassArr.push(newgrass);
+            grassCount++;
             matrix[grass[1]][grass[0]] = 1;
         }
     }

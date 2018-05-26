@@ -1,9 +1,9 @@
 var LivingCreature = require('./class.livingcreature.js');
 
 module.exports = class Xotaker extends LivingCreature {
-    constructor(x, y, index) {
+    constructor(x, y, r) {
         super(x, y);
-        this.index = index;
+        this.r = r;
         this.multiply = Math.round(Math.random() * 8);
         this.energy = Math.round(Math.random() * 16);
         this.speed = 8;
@@ -49,6 +49,8 @@ module.exports = class Xotaker extends LivingCreature {
                     var r = (Math.round(Math.random()) / 2) + 2;
                     var newxotaker = new Xotaker(newvand[0], newvand[1], r);
                     xotakerArr.push(newxotaker);
+                    if (r == 2) arakanXotakerCount++;
+                    else igakanXotakerCount++;
                     matrix[newvand[1]][newvand[0]] = r;
                 }
             }
@@ -61,6 +63,8 @@ module.exports = class Xotaker extends LivingCreature {
             for (var i in xotakerArr) {
                 if (xotakerArr[i].x == this.x && xotakerArr[i].y == this.y) {
                     xotakerArr.splice(i, 1);
+                    if (xotakerArr[i].r == 2) arakanXotakerCount--;
+                    else igakanXotakerCount--;
                 }
             }
         }
