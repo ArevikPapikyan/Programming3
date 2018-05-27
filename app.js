@@ -31,9 +31,9 @@ global.arakanAmenakerCount = 0;
 global.igakanAmenakerCount = 0;
 global.aygepanCount = 0;
 
-global.w = 30;
-global.h = 30;
-global.side = 22;
+var w = 30;
+var h = 30;
+var side = 24;
 
 global.matrix = [];
 

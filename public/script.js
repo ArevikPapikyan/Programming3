@@ -4,16 +4,12 @@ var matrix = [];
 
 socket.on('matrix', function (data) {
     matrix = [];
-    for (i in data) {
-        matrix.push(data[i]);
-    }
+    matrix = data;
 });
 
 var w = 30;
 var h = 30;
-var side = 22;
-
-var sentData = [];
+var side = 24;
 
 var grassArr = [];
 var xotakerArr = [];
@@ -41,13 +37,13 @@ var weather = 'գարուն';
 
 socket.on('sending weather', function (data) {
     weather = data;
-    document.getElementById('exanak').innerText = weather;
+    document.getElementById('weather').innerText = weather;
 });
 
 var matrix;
 
 function setup() {
-    document.getElementById('exanak').innerText = weather;
+    document.getElementById('weather').innerText = weather;
     createCanvas(side * w, side * h);
     background("#acacac");
     frameRate(5);
