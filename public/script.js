@@ -3,7 +3,6 @@ socket = io.connect('http://localhost:3000');
 var matrix = [];
 
 socket.on('matrix', function (data) {
-    matrix = [];
     matrix = data;
 });
 
